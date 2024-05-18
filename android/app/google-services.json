@@ -1,0 +1,93 @@
+{
+  "project_info": {
+    "project_number": "596818263102",
+    "firebase_url": "https://ukilvai-app-default-rtdb.firebaseio.com",
+    "project_id": "ukilvai-app",
+    "storage_bucket": "ukilvai-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:596818263102:android:a2b06e7e7bfa925943656f",
+        "android_client_info": {
+          "package_name": "com.sf.ukilvai.lawyerapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "596818263102-7rskedb01v3fekdnpec1jj867fpss9mo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCa16BlVHZhJZonJarcCicBa3l_S2yyAN0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "596818263102-7rskedb01v3fekdnpec1jj867fpss9mo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:596818263102:android:6275dea8c7afca7843656f",
+        "android_client_info": {
+          "package_name": "com.sf.ukilvai.userapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "596818263102-jva7sg8vcqsa8a5al3btj54s3c6kbbb3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sf.ukilvai.userapp",
+            "certificate_hash": "88f234ae1c9d597c7b70758805426560839805a4"
+          }
+        },
+        {
+          "client_id": "596818263102-phep2tj97qtjat2vmf6jjbcdvb998ago.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sf.ukilvai.userapp",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "596818263102-sqpjn41sqaro8edkkdm0kensg758fkkr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sf.ukilvai.userapp",
+            "certificate_hash": "2f76331c24ef5e38a6c6ae803fe3fb5b72a85d1b"
+          }
+        },
+        {
+          "client_id": "596818263102-7rskedb01v3fekdnpec1jj867fpss9mo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCa16BlVHZhJZonJarcCicBa3l_S2yyAN0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "596818263102-7rskedb01v3fekdnpec1jj867fpss9mo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
