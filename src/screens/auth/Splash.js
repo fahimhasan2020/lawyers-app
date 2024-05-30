@@ -6,10 +6,12 @@ import Styles from '../../themes/Styles'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch } from 'react-redux'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { firebasesetup } from '../../utility/firebasesetup'
 const Splash = () => {
 const dispatch = useDispatch();
 const navigation = useNavigation();
 useEffect(()=>{
+  firebasesetup();
   setTimeout(async()=>{
       await loggedInCheck()
     },3000);

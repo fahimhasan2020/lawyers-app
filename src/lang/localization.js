@@ -6,6 +6,7 @@ export const resources ={
         "or": "Or",
         "login": "Login",
         "enter-phone": "Enter phone number",
+        "register-link": "Don't have account? register as lawyer",
       }
     },
     "bd": {
@@ -15,6 +16,7 @@ export const resources ={
         "or": "অথবা",
         "login": "লগইন",
         "enter-phone": "ফোন নম্বর লিখুন",
+        "register-link": "অ্যাকাউন্ট নেই? আইনজীবী হিসাবে নিবন্ধন করুন",
       }
     }
 }

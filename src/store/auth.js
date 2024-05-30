@@ -13,13 +13,38 @@ const initialState = {
   loading:false,
   fullPageLoader:false,
   paymentSuccess:false,
+  registrationPayload:{
+    firstName:'',
+    lastName:'',
+    email:'',
+    phoneNumber:'',
+    lat:'',
+    lng:'',
+    address:'',
+    gender:'',
+    degrees:'',
+    description:'',
+    visit:'',
+    profilePicture:'',
+    llbCertificate:'',
+    llMCertificate:'',
+    dateOfBirth:'',
+  }
 };
 
 const auth = (state = initialState, action) => {
   switch (action.type) {
     case 'SET_LOGGED':
       return {...state, loggedIn: action.payload};
-    case 'SET_FULL_LOADING':
+    case 'UPDATE_REGISTRATION_PAYLOAD':
+      return {
+        ...state,
+        registrationPayload: {
+          ...state.registrationPayload,
+          [action.key]: action.value,
+          },
+        };
+    case 'SET_REGISTRATION_PAYLOAD':
       return {...state, fullPageLoader: action.payload};
     case 'SET_PAYMENT_SUCCESS':
       return {...state, paymentSuccess: action.payload};

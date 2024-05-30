@@ -22,6 +22,7 @@ import CustomDrawerContent from './CustomDrawerContent';
 import LoadingBar from '../components/LoadingBar';
 import AppStatusBar from '../components/AppStatusBar';
 import FullPageLoader from '../components/FullPageLoader';
+import Registration from '../screens/auth/Registration';
 
 function HomeTabs() {
   const navigation = useNavigation();
@@ -264,6 +265,7 @@ function AuthStack() {
     <Stack.Navigator screenOptions={stackOptions}>
       <Stack.Screen name="Splash" component={Splash} />
       <Stack.Screen name="Login" component={Login} />     
+      <Stack.Screen name="Registration" component={Registration} />     
     </Stack.Navigator>
   );
 }

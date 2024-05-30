@@ -15,3 +15,10 @@ export const WhiteInput = ({placeholder='',value='',onChangeText,keyboardType='d
     </View>
   )
 }
+export const WhiteTextInput = ({placeholder='',value='',onChangeText,keyboardType='default',onSubmit}) => {
+  return (
+    <View style={[{width:Sizes.fullWidth,height:60},Styles.alignCenter]}>
+      <TextInput onSubmitEditing={onSubmit} keyboardType={keyboardType} placeholderTextColor={'#000'} placeholder={placeholder} value={value} onChangeText={onChangeText} style={[Styles.whiteInput,{paddingLeft:20}]} />
+    </View>
+  )
+}

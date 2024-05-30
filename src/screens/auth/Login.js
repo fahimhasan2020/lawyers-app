@@ -55,39 +55,12 @@ const Login = () => {
   };
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const configureNotification = () => {
-    PushNotification.configure({
-      onRegister: async token => {
-       //console.log('push token',token);
-       setPushToken(token.token);
-      },
-      onNotification: function (notification) {
-        console.log('NOTIFICATION:', notification);
-        notification.finish(PushNotificationIOS.FetchResult.NoData);
-      },
-      onAction: function (notification) {
-        console.log('ACTION:', notification.action);
-        console.log('NOTIFICATION:', notification);
-      },
-      onRegistrationError: function (err) {
-        console.error(err.message, err);
-      },
-      permissions: {
-        alert: true,
-        badge: true,
-        sound: true,
-      },
-      popInitialNotification: true,
-      foreground: true,
-      requestPermissions: true,
-    });
-  };
 
   useEffect(()=>{
         hideNavigationBar();
        
         firebase.initializeApp(firebaseConfig);
-        configureNotification();
+        
         const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
         return subscriber; 
       },[]);
@@ -327,7 +300,17 @@ const Login = () => {
         />}
         <PrimaryButton onPress={()=>{loginAction()}}  loading={loading} label={t('login')} />
         </View>
+       
       </ScrollView>
+      <Pressable
+      onPress={()=>{
+        navigation.navigate('Registration');
+      }}
+      style={{
+          position:'absolute',
+          bottom:100,
+          alignSelf:'center'
+        }}><Text style={{color:'#fff'}}>{t('register-link')}</Text></Pressable>
       </KeyboardAvoidingView>
       <Svg xmlns="http://www.w3.org/2000/svg" style={{position:'absolute',bottom:0,left:-25}} width="204" height="91" viewBox="0 0 284 171" fill="none">
         <Path d="M283 170H1V1L40 30C79 60 43 74 94 70C145 66 119 145 181 122C230.6 103.6 269.667 146.333 283 170Z" fill="#F04F20" stroke="#F04F20"/>
