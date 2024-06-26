@@ -7,6 +7,7 @@ import { WhiteInput } from '../../components/Inputs';
 import Sizes from '../../themes/Sizes';
 import { Svg,Path } from 'react-native-svg';
 import PrimaryButton from '../../components/Buttons';
+import {ConnectionStatusBar} from "react-native-ui-lib"
 import Entypo from "react-native-vector-icons/Entypo"
 import FontAwesome from "react-native-vector-icons/FontAwesome"
 import { colors } from '../../constants/colors';
@@ -71,7 +72,6 @@ const Login = () => {
     }
   };
   const loginAction  = async() =>{
-    
     setLoading(true); 
     if (!otpState) {
       if(phone === ''){
@@ -262,7 +262,7 @@ const Login = () => {
 
   }
   return (
-    <Container> 
+    <Container>
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : -40} style={{backgroundColor:'#000',flex:1}}>
         <ScrollView keyboardShouldPersistTaps="handled" automaticallyAdjustKeyboardInsets={true} contentContainerStyle={{backgroundColor:'#000'}}>
       <Image source={require('../../assets/bgone.jpg')} style={{position:'absolute',top:0,height:Sizes.fullWidth,width:Sizes.fullWidth,opacity:0.8}} />
@@ -299,6 +299,7 @@ const Login = () => {
           })}
         />}
         <PrimaryButton onPress={()=>{loginAction()}}  loading={loading} label={t('login')} />
+        
         </View>
        
       </ScrollView>
@@ -312,9 +313,13 @@ const Login = () => {
           alignSelf:'center'
         }}><Text style={{color:'#fff'}}>{t('register-link')}</Text></Pressable>
       </KeyboardAvoidingView>
+      
       <Svg xmlns="http://www.w3.org/2000/svg" style={{position:'absolute',bottom:0,left:-25}} width="204" height="91" viewBox="0 0 284 171" fill="none">
         <Path d="M283 170H1V1L40 30C79 60 43 74 94 70C145 66 119 145 181 122C230.6 103.6 269.667 146.333 283 170Z" fill="#F04F20" stroke="#F04F20"/>
       </Svg>
+      <View style={{position:'absolute',top:40,left:0,width:'100%'}}>
+      <ConnectionStatusBar allowDismiss label='No internet connection available' onConnectionChange={() => console.log('connection changed')}/>
+        </View>
     </Container>
   )
 }

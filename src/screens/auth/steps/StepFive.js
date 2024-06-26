@@ -4,8 +4,8 @@ import { WhiteTextInput } from '../../../components/Inputs'
 const StepFive = () => {
   return (
     <View>
-      <WhiteTextInput placeholder='Total years of experience' />
-      <WhiteTextInput placeholder='Enter your current age' />
+      <WhiteTextInput keyboardType='numeric' placeholder='Total years of experience' />
+      <WhiteTextInput keyboardType='numeric' placeholder='Enter your current age' />
     </View>
   )
 }

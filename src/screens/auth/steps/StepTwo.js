@@ -9,6 +9,7 @@ const StepTwo = () => {
   const [lastName,setLastName] = useState('');
   const [email,setEmail] = useState('');
   const [phoneNumber,setPhoneNumber] = useState('');
+  
   const handleChange = (key, value) => {
     dispatch({ type: 'UPDATE_REGISTRATION_PAYLOAD', key, value });
   };
