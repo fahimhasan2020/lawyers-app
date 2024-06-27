@@ -2,7 +2,9 @@ import { StyleSheet, Text, View } from 'react-native'
 import React,{useState,useEffect} from 'react'
 import { WhiteTextInput,WhiteInput } from '../../../components/Inputs'
 import { useDispatch,useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 const StepTwo = () => {
+  const {t,i18n} = useTranslation();
   const dispatch = useDispatch();
   const registrationPayload = useSelector(state => state.auth.registrationPayload);
   const [firstName,setFirstName] = useState('');
@@ -15,12 +17,12 @@ const StepTwo = () => {
   };
   return (
     <View style={{paddingTop:50}}>
-      <WhiteTextInput value={registrationPayload?.firstName} placeholder='Enter first name' onChangeText={(value)=>{
+      <WhiteTextInput value={registrationPayload?.firstName} placeholder={t('firstName')} onChangeText={(value)=>{
         handleChange('firstName',value);
         }} />
-      <WhiteTextInput value={registrationPayload?.lastName}  placeholder='Enter last name'  onChangeText={(value)=>{handleChange('lastName',value);}} />
-      <WhiteTextInput value={registrationPayload?.email}  placeholder='Enter email'  onChangeText={(value)=>{handleChange('email',value);}} />
-      <WhiteTextInput value={registrationPayload?.phoneNumber}  placeholder='Enter phone number'  onChangeText={(value)=>{handleChange('phoneNumber',value);}} />
+      <WhiteTextInput value={registrationPayload?.lastName}  placeholder={t('lastName')}  onChangeText={(value)=>{handleChange('lastName',value);}} />
+      <WhiteTextInput value={registrationPayload?.email}  placeholder={t('email')}  onChangeText={(value)=>{handleChange('email',value);}} />
+      <WhiteTextInput value={registrationPayload?.phoneNumber}  placeholder={t('phoneNumber')}  onChangeText={(value)=>{handleChange('phoneNumber',value);}} />
     </View>
   )
 }

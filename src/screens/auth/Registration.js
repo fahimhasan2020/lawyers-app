@@ -5,10 +5,12 @@ import StepTwo from './steps/StepTwo';
 import StepThree from './steps/StepThree';
 import StepFive from './steps/StepFive';
 import StepFour from './steps/StepFour';
+import { useTranslation } from 'react-i18next';
 const Registration = () => {
+    const { t, i18n } = useTranslation();
   return (
     <SafeAreaView style={{flex: 1,paddingTop:50}}>
-        <Text style={styles.mainHeader}>Completed registration step 0</Text>
+        <Text style={styles.mainHeader}>{t('registrationStep')} 0</Text>
     <ProgressSteps 
     activeLabelColor="orange"
     activeStepNumColor="orange"
@@ -16,16 +18,18 @@ const Registration = () => {
     disabledStepNumColor="black"
     activeStepIconBorderColor="orange">
         <ProgressStep 
-        label="Info" 
+        label={t('info')} 
         nextBtnStyle={styles.nextBtnStyle} 
-        nextBtnText="Next"
+        nextBtnText={t('next')}
         nextBtnTextStyle={styles.nextBtnTextStyle}
         
         >
             <StepTwo />
         </ProgressStep>
         <ProgressStep 
-        label="Address"
+        label={t('address')}
+        nextBtnText={t('next')}
+        previousBtnText={t('previous')}
         nextBtnStyle={styles.nextBtnStyle} 
         nextBtnTextStyle={styles.nextBtnTextStyle}
         previousBtnStyle={styles.nextBtnStyle} 
@@ -34,7 +38,9 @@ const Registration = () => {
             <StepThree />
         </ProgressStep>
         <ProgressStep 
-        label="Details"
+        previousBtnText={t('previous')}
+        nextBtnText={t('next')}
+        label={t('details')}
         nextBtnStyle={styles.nextBtnStyle} 
         nextBtnTextStyle={styles.nextBtnTextStyle}
         previousBtnStyle={styles.nextBtnStyle} 
@@ -43,12 +49,12 @@ const Registration = () => {
             <StepFour />
         </ProgressStep>
         <ProgressStep 
-
-        label="Verification"
+        previousBtnText={t('previous')}
+        label={t('verification')}
         previousBtnStyle={styles.nextBtnStyle} 
         previousBtnTextStyle={styles.nextBtnTextStyle}
         nextBtnStyle={styles.nextBtnStyle}
-        finishBtnText="Register"
+        finishBtnText={t('register')}
         nextBtnTextStyle={styles.nextBtnTextStyle}
         >
             <StepFive />
