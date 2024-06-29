@@ -29,6 +29,8 @@ const initialState = {
     llbCertificate:'',
     llMCertificate:'',
     dateOfBirth:'',
+    age:'',
+    experience:''
   }
 };
 

@@ -30,6 +30,10 @@ export const resources ={
         "totalExperience": "Enter Total Years of Experience",
         "age": "Enter Your Current Age",
         "register": "Register",
+        "llbFilePlaceholder":"Press here to upload you LLB certificate (* pdf format)",
+        "llMFilePlaceholder":"Press here to upload you LLM certificate (* pdf format)",
+        "llbFilePlaceholderFilled":"Press here to change LLB certificate",
+        "llMFilePlaceholderFilled":"Press here to change LLM certificate",
       }
     },
     "bd": {
@@ -63,6 +67,10 @@ export const resources ={
         "totalExperience": "আপনার সর্বোমোট অভিজ্ঞতার বছর",
         "age": "বয়স",
         "register": "রেজিস্ট্রার",
+        "llbFilePlaceholder": "আপনার এলএলবি সার্টিফিকেট আপলোড করতে এখানে চাপুন (* পিডিএফ ফরম্যাট)",
+        "llMFilePlaceholder": "আপনার এলএলএম সার্টিফিকেট আপলোড করতে এখানে চাপুন (* পিডিএফ ফরম্যাট)",
+        "llbFilePlaceholderFilled": "এলএলবি সার্টিফিকেট পরিবর্তন করতে এখানে চাপুন ",
+        "llMFilePlaceholderFilled": "এলএলএম সার্টিফিকেট পরিবর্তন করতে এখানে চাপুন "
       }
     }
 }
