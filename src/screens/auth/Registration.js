@@ -11,23 +11,23 @@ import { useDispatch,useSelector } from 'react-redux';
 import {useFormik} from 'formik';
 const Registration = () => {
     const { t, i18n } = useTranslation();
-    const [registrationStep,setRegistrationStep] = useState(1);
+    const [registrationStep,setRegistrationStep] = useState(t('1'));
     const registrationPayload = useSelector(state => state.auth.registrationPayload);
     const [validationErrorsStepOne,setValidationErrorsStepOne] = useState(false);
     const [validationErrorsStepTwo,setValidationErrorsStepTwo] = useState(false);
     const [validationErrorsStepThree,setValidationErrorsStepThree] = useState(false);
     const [validationErrorsStepFour,setValidationErrorsStepFour] = useState(false);
     const InfoSchema = Yup.object().shape({
-        email: Yup.string().email('Invalid email address.').required("email is required"),
-        phoneNumber: Yup.string().matches(/^\d{10}$/, 'Phone number must be exactly 10 digits').required('Phone number is required.'),
-        firstName: Yup.string('Invalid first name')
-          .min(1, 'First name is too short!')
-          .max(20, 'First name is too long!')
-          .required('First name is required.'),
-        lastName: Yup.string('Invalid last name')
-          .min(1, 'Last name is too short!')
-          .max(20, 'Last name is too long!')
-          .required('Last name is required.'),
+        email: Yup.string().email(t('emailInvalid')).required(t('emailRequired')),
+        phoneNumber: Yup.string().matches(/^\d{10}$/, t('phoneRule')).required(t('phoneNumberRequired')),
+        firstName: Yup.string(t('firstNameInvalid'))
+          .min(1, t('firstNameShort'))
+          .max(20, t('firstNameLong'))
+          .required(t('firstNameRequired')),
+        lastName: Yup.string(t('lastNameInvalid'))
+          .min(1, t('lastNameShort'))
+          .max(20,t('lastNameLong'))
+          .required(t('lastNameRequired')),
       });
     
       const infoForm =
@@ -48,13 +48,13 @@ const Registration = () => {
         setValidationErrorsStepOne(true);
       } else {
         setValidationErrorsStepOne(false);
-        setRegistrationStep(2);
+        setRegistrationStep(t('2'));
       }
     }
     const addressSchema = Yup.object().shape({
-        address: Yup.string().required("Address is required"),
-        lat: Yup.string().required('Apply address from suggested list.'),
-        lng: Yup.string().required('Apply address from suggested list.'),
+        address: Yup.string().required(t('addressRequired')),
+        lat: Yup.string().required(t('addressApply')),
+        lng: Yup.string().required(t('addressApply')),
       });
     
       const addressForm =
@@ -76,7 +76,7 @@ const Registration = () => {
                 setValidationErrorsStepTwo(true);
             } else {
                 setValidationErrorsStepTwo(false);
-                setRegistrationStep(3);
+                setRegistrationStep(t('3'));
             }
      }catch(e){
         console.log("error is",e);
@@ -85,11 +85,11 @@ const Registration = () => {
     }
 
     const DetailsSchema = Yup.object().shape({
-        profilePicture: Yup.string().required("Profile picture is required"),
-        degrees: Yup.string().required("Degrees is required"),
-        visit: Yup.number().required("Consultancy fee is required"),
-        description: Yup.string().required("Lawyer details is required"),
-        gender: Yup.string().required("Gender is required"),
+        profilePicture: Yup.string().required(t('profilePictureRequired')),
+        degrees: Yup.string().required(t('degreesRequired')),
+        visit: Yup.number().required(t('consultancyRequired')),
+        description: Yup.string().required(t('lawyerDetailsRequired')),
+        gender: Yup.string().required(t('genderRequired')),
       });
     
       const detailsForm =
@@ -111,14 +111,14 @@ const Registration = () => {
         setValidationErrorsStepThree(true);
       } else {
         setValidationErrorsStepThree(false);
-        setRegistrationStep(4);
+        setRegistrationStep(t('4'));
       }
     }
 
     const VerificationSchema = Yup.object().shape({
-        experience: Yup.number().required("Experience is required"),
-        age: Yup.number().required("Age is required"),
-        llbCertificate: Yup.string().required("LLB certificate is required"),
+        experience: Yup.number().required(t('experienceRequired')),
+        age: Yup.number().required(t('ageRequired')),
+        llbCertificate: Yup.string().required(t('llbCertificateRequired')),
       });
     
       const verificationForm =
@@ -169,7 +169,7 @@ const Registration = () => {
         <ProgressStep 
         errors={validationErrorsStepTwo}
         onNext={onNextSecond}
-        onPrevious={()=>{setRegistrationStep(1)}}
+        onPrevious={()=>{setRegistrationStep(t('1'))}}
         label={t('address')}
         nextBtnText={t('next')}
         previousBtnText={t('previous')}
@@ -183,7 +183,7 @@ const Registration = () => {
         <ProgressStep 
         onNext={onNextThird}
         errors={validationErrorsStepThree}
-        onPrevious={()=>{setRegistrationStep(2)}}
+        onPrevious={()=>{setRegistrationStep(t('2'))}}
         previousBtnText={t('previous')}
         nextBtnText={t('next')}
         label={t('details')}
@@ -197,7 +197,7 @@ const Registration = () => {
         <ProgressStep 
         errors={validationErrorsStepFour}
         onSubmit={onNextFourth}
-        onPrevious={()=>{setRegistrationStep(3)}}
+        onPrevious={()=>{setRegistrationStep(t('3'))}}
         previousBtnText={t('previous')}
         label={t('verification')}
         previousBtnStyle={styles.nextBtnStyle} 

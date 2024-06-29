@@ -37,7 +37,7 @@ const StepFour = ({errors}) => {
         {registrationPayload?.profilePicture ===''?<Image 
         source={{uri:'https://placehold.co/400'}} style={styles.dp} />:<Image 
         source={{uri:registrationPayload?.profilePicture}} style={styles.dp} />}
-        <Text style={{alignSelf:'center',color:'#fff',marginBottom:5}}>Click here to upload/replace image</Text>
+        <Text style={{alignSelf:'center',color:'#fff',marginBottom:5}}>{t('imageUploadText')}</Text>
       </TouchableOpacity>
       {errors?.profilePicture && <Text style={{alignSelf:'center',textAlign:'center'}} red10>{errors?.profilePicture}</Text>}
       <WhiteTextInput value={registrationPayload?.degrees} placeholder={t('enterDegrees')} onChangeText={(value)=>{handleChange('degrees',value);}} />
