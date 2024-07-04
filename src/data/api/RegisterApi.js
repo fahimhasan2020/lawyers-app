@@ -4,9 +4,7 @@ import { fireMessage } from "../../utility/flashMessageFire";
 export const registerApiCall = async(data)=>{
     try{
        const response = await ApiService.post("registration",data);
-       const result = response.json();
-       console.log(result);
-       return result;
+       return response;
     }catch(e){
         console.log(e);
         fireMessage("Request failed. Try again later","danger");

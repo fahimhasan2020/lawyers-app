@@ -9,8 +9,13 @@ import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import { useDispatch,useSelector } from 'react-redux';
 import {useFormik} from 'formik';
+import { uploadFileToServer } from '../../data/api/UploadFile';
+import registerApiCall from '../../data/api/RegisterApi';
+import { fireMessage } from '../../utility/flashMessageFire';
+import { useNavigation } from '@react-navigation/native';
 const Registration = () => {
     const { t, i18n } = useTranslation();
+    const navigation = useNavigation();
     const [registrationStep,setRegistrationStep] = useState(t('1'));
     const registrationPayload = useSelector(state => state.auth.registrationPayload);
     const [validationErrorsStepOne,setValidationErrorsStepOne] = useState(false);
@@ -142,9 +147,46 @@ const Registration = () => {
         setValidationErrorsStepFour(false);
       }
     }
-
     const completeRegistration = async()=>{
-        console.log("completed", registrationPayload);
+      try{
+        const certificateUploadllb = await uploadFileToServer(registrationPayload?.llbCertificate,'application/pdf');
+        const profilePicture = await uploadFileToServer(registrationPayload?.profilePicture,'image/jpeg');
+        const datas = {
+          visit:registrationPayload?.visit,
+          gender:registrationPayload?.gender,
+          date_of_birth:registrationPayload?.dateOfBirth,
+          age:registrationPayload?.age,
+          experience_year:registrationPayload?.experience,
+          lat:registrationPayload?.lat,
+          lng:registrationPayload?.lng,
+          push_token:registrationPayload?.pushToken,
+          first_name:registrationPayload?.firstName,
+          last_name:registrationPayload?.lastName,
+          email:registrationPayload?.email,
+          phone_number:registrationPayload?.phoneNumber,
+          description:registrationPayload?.description,
+          degrees:registrationPayload?.degrees,
+          department:1,
+          profile_picture:profilePicture,
+          llb_certificate:certificateUploadllb
+        }
+        if(registrationPayload?.llmCertificate !== ''){
+          const certificateUploadllm = await uploadFileToServer(registrationPayload?.llmCertificate,'application/pdf');
+          datas['llm_certificate'] = certificateUploadllm;
+        }
+        const response = await registerApiCall(datas);
+        console.log(response);
+        if(response?.success){
+          fireMessage("Registration completed. Wait for admin approval","success");
+          navigation.goBack();
+        }else{
+          console.log(response?.message);
+          fireMessage("Please enter unique phone number and email","danger");
+        }
+        
+      }catch(e){
+        console.log(e);
+      }
     }
   return (
     <SafeAreaView style={{flex: 1,paddingTop:50}}>

@@ -23,8 +23,6 @@ import OTPInputView from '@twotalltotems/react-native-otp-input'
 import { GoogleSignin, statusCodes, GoogleSigninButton, } from '@react-native-google-signin/google-signin';
 import loginApiCall from '../../data/api/LoginApi';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import PushNotification from 'react-native-push-notification';
-import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import { socialLoginApi } from '../../data/api/SocialLoginApi';
 const firebaseConfig = {
   apiKey: "AIzaSyCa16BlVHZhJZonJarcCicBa3l_S2yyAN0",
@@ -39,7 +37,7 @@ const Login = () => {
   const [isEnabled, setIsEnabled] = useState(true);
   const [otpState, setOtpState] = useState(false);
   const [otp, setOtp] = useState("");
-  const [pushToken, setPushToken] = useState("");
+  const registrationPayload = useSelector(state => state.auth.registrationPayload);
   const [confirmation, setConfirmation] = useState(null);
   const [loading, setLoading] = useState(false);
   const [phone, setPhone] = useState('');
@@ -100,7 +98,7 @@ const Login = () => {
         await confirmation.confirm(otp);
         await dispatch({ type: 'SET_FULL_LOADING', payload: true });
 
-        const userDetails =  await loginApiCall({phoneNumber:phone,push_token:pushToken});
+        const userDetails =  await loginApiCall({phoneNumber:phone,push_token:registrationPayload?.pushToken});
         console.log(userDetails);
         if(userDetails.hasOwnProperty("token")){
           dispatch({ type: 'SET_LOGGED', payload: true });
@@ -119,6 +117,10 @@ const Login = () => {
           if(userDetails.user.phone_number){
             await  AsyncStorage.setItem("phoneNumber",phone);
             dispatch({ type: 'SET_PHONE_NUMBER', payload: userDetails.user.phone_number });
+          }  
+          if(userDetails.user.profile_picture){
+            await  AsyncStorage.setItem("profilePicture",userDetails.user.profile_picture);
+            dispatch({ type: 'SET_DP', payload: userDetails.user.profile_picture });
           }  
           dispatch({ type: 'SET_FULL_LOADING', payload: false });      
         }
@@ -299,19 +301,18 @@ const Login = () => {
           })}
         />}
         <PrimaryButton onPress={()=>{loginAction()}}  loading={loading} label={t('login')} />
-        
-        </View>
-       
-      </ScrollView>
-      <Pressable
+        <Pressable
       onPress={()=>{
         navigation.navigate('Registration');
       }}
       style={{
-          position:'absolute',
-          bottom:100,
+          marginTop:50,
           alignSelf:'center'
         }}><Text style={{color:'#fff'}}>{t('register-link')}</Text></Pressable>
+        </View>
+       
+      </ScrollView>
+      
       </KeyboardAvoidingView>
       
       <Svg xmlns="http://www.w3.org/2000/svg" style={{position:'absolute',bottom:0,left:-25}} width="204" height="91" viewBox="0 0 284 171" fill="none">

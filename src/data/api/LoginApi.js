@@ -8,7 +8,7 @@ export const loginApiCall = async({phoneNumber='',push_token=''})=>{
         var requestOptions = {
         method: 'POST',
         headers: myHeaders,
-        body: JSON.stringify({phoneNumber:phoneNumber,push_token:push_token}),
+        body: JSON.stringify({phone_number:phoneNumber,push_token:push_token}),
         };
 
         const apiCall = await fetch(baseApi+"login", requestOptions);

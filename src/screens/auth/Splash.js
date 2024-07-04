@@ -19,6 +19,7 @@ useEffect(()=>{
 
 const loggedInCheck = async()=>{
   const loggedInStat = await AsyncStorage.getItem("loggedIn");
+  const pushToken = await AsyncStorage.getItem("pushToken");
   if(loggedInStat !== null && loggedInStat !== '' && loggedInStat !== undefined){
     if(loggedInStat === "true"){
       await dispatch({ type: 'SET_FULL_LOADING', payload: true });
@@ -28,6 +29,7 @@ const loggedInCheck = async()=>{
       const email = await AsyncStorage.getItem("email");
       const phoneNumber = await AsyncStorage.getItem("phoneNumber");
       const dp = await AsyncStorage.getItem("profilePicture");
+      
       if(id !== null || id !== '' || id !== undefined){
        await dispatch({ type: 'SET_ID', payload: id });
       }
@@ -47,14 +49,18 @@ const loggedInCheck = async()=>{
       await dispatch({ type: 'SET_LOGGED', payload: true });
       await dispatch({ type: 'SET_FULL_LOADING', payload: false });
     }else{
-     
+      handleChange("pushToken",pushToken);
       navigation.navigate("Login");
     }
   }else{
-   
+    handleChange("pushToken",pushToken);
     navigation.navigate("Login");
   }
 }
+
+const handleChange = (key, value) => {
+  dispatch({ type: 'UPDATE_REGISTRATION_PAYLOAD', key, value });
+};
   return (
     <Container>
       <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>

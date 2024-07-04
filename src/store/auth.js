@@ -14,6 +14,7 @@ const initialState = {
   fullPageLoader:false,
   paymentSuccess:false,
   registrationPayload:{
+    pushToken:'',
     firstName:'',
     lastName:'',
     email:'',
