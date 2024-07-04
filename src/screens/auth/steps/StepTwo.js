@@ -3,7 +3,8 @@ import React,{useState,useEffect} from 'react'
 import { WhiteTextInput,WhiteInput } from '../../../components/Inputs'
 import { useDispatch,useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
-import { Text } from 'react-native-ui-lib'
+import { Text,Button } from 'react-native-ui-lib'
+import { fireMessage } from '../../../utility/flashMessageFire'
 const StepTwo = ({errors}) => {
   const {t,i18n} = useTranslation();
   const dispatch = useDispatch();

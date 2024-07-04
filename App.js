@@ -4,6 +4,7 @@ import { Provider } from 'react-redux'
 import store from './src/store/store'
 import Index from './src/navigation/Index'
 import RNBootSplash from "react-native-bootsplash";
+import FlashMessage from 'react-native-flash-message'
 const App = () => {
   const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme());
   useEffect(()=>{
@@ -19,7 +20,10 @@ const App = () => {
     };
   },[])
 
-  return (<Provider store={store}><Index /></Provider>)
+  return (<Provider store={store}>
+    <Index />
+    <FlashMessage position="bottom" /> 
+    </Provider>)
 }
 
 export default App
