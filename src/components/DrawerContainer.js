@@ -4,6 +4,7 @@ import { Svg,Path } from 'react-native-svg'
 import {useNavigation} from "@react-navigation/native"
 import Sizes from '../themes/Sizes'
 import EvilIcons from "react-native-vector-icons/EvilIcons"
+import AntDesign from "react-native-vector-icons/AntDesign"
 const DrawerContainer = ({children,title='',showGear=false}) => {
   const navigation = useNavigation()
   return (
@@ -14,9 +15,10 @@ const DrawerContainer = ({children,title='',showGear=false}) => {
         
       <View style={styles.barContainer}>
         <Pressable
+        style={{height:60}}
         onPress={()=>{navigation.goBack()}}
         >
-            <EvilIcons name="arrow-left" size={38} color={'#fff'} />
+            <AntDesign name="arrowleft" size={28} color={'#fff'} />
         </Pressable>
         <Text style={styles.titleContent}>{title}</Text>
         {showGear?<Pressable

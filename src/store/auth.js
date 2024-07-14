@@ -4,6 +4,7 @@ const initialState = {
   userDp:'',
   token: '',
   phoneNumber: '',
+  balance:'',
   id: '',
   name: '',
   email: '',
@@ -13,8 +14,10 @@ const initialState = {
   loading:false,
   fullPageLoader:false,
   paymentSuccess:false,
+  online:false,
   registrationPayload:{
     pushToken:'',
+    token:'',
     firstName:'',
     lastName:'',
     email:'',
@@ -31,7 +34,8 @@ const initialState = {
     llMCertificate:'',
     dateOfBirth:'',
     age:'',
-    experience:''
+    experience:'',
+    
   }
 };
 
@@ -53,12 +57,18 @@ const auth = (state = initialState, action) => {
       return {...state, paymentSuccess: action.payload};
     case 'SET_PHONE_NUMBER':
       return {...state, phoneNumber: action.payload};
+    case 'SET_TOKEN':
+      return {...state, token: action.payload};
     case 'SET_EMAIL':
       return {...state, email: action.payload};
     case 'SET_NAME':
       return {...state, name: action.payload};
     case 'SET_DP':
       return {...state, userDp: action.payload};
+    case 'SET_BALANCE':
+      return {...state, balance: action.payload};
+    case 'SET_ONLINE':
+      return {...state, online: action.payload};
     case 'SET_ID':
       return {...state, id: action.payload};
     default:

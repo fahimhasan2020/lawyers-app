@@ -13,7 +13,7 @@ import MeetingScreen from "../screens/dashboard/MeetingScreen";
 import PaymentWindow from "../screens/dashboard/PaymentWindow";
 import Profile from "../screens/dashboard/Profile";
 import Meetings from "../screens/dashboard/Meetings";
-import Favourites from "../screens/dashboard/Favourites";
+import Favourites from "../screens/dashboard/Service";
 import Documents from "../screens/dashboard/Documents";
 import Tutorial from "../screens/dashboard/Tutorial";
 import Applications from "../screens/dashboard/Applications";

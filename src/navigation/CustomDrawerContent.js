@@ -48,17 +48,11 @@ const CustomDrawerContent = (props) => {
           </View>
           <Text style={{fontSize:13,fontWeight:'bold',color:'#535763',opacity:0.5}}>মিটিংস</Text>
         </Pressable>
-        <Pressable onPress={()=>{navigation.navigate('Favourites');props.navigation.closeDrawer();}} android_ripple={{color: '#F0F0F0'}} style={{width:180,height:50,borderRadius:25,alignSelf:'center',paddingTop:15,paddingLeft:15,flexDirection:'row'}}>
+        <Pressable onPress={()=>{navigation.navigate('Service');props.navigation.closeDrawer();}} android_ripple={{color: '#F0F0F0'}} style={{width:180,height:50,borderRadius:25,alignSelf:'center',paddingTop:15,paddingLeft:15,flexDirection:'row'}}>
           <View style={{width:30}}>
-            <AntDesign name={'hearto'} size={18} color={'#535763'} style={{opacity:0.5}} />
+            <Entypo name={'tools'} size={18} color={'#535763'} style={{opacity:0.5}} />
           </View>
-          <Text style={{fontSize:13,fontWeight:'bold',color:'#535763',opacity:0.5}}>প্রিয় উকিল</Text>
-        </Pressable>
-        <Pressable onPress={()=>{navigation.navigate('Documents');props.navigation.closeDrawer();}} android_ripple={{color: '#F0F0F0'}} style={{width:180,height:50,borderRadius:25,alignSelf:'center',paddingTop:15,paddingLeft:15,flexDirection:'row'}}>
-          <View style={{width:30}}>
-            <Feather name={'file-text'} size={18} color={'#535763'} style={{opacity:0.5}} />
-          </View>
-          <Text style={{fontSize:13,fontWeight:'bold',color:'#535763',opacity:0.5}}>ডকুমেন্টস</Text>
+          <Text style={{fontSize:13,fontWeight:'bold',color:'#535763',opacity:0.5}}>সার্ভিস</Text>
         </Pressable>
       </View>
       <View style={{width:'100%',height:0.3,backgroundColor:'#535763',opacity:0.5,marginTop:10,marginBottom:10}}></View>
@@ -73,7 +67,7 @@ const CustomDrawerContent = (props) => {
           <View style={{width:30}}>
             <MaterialCommunityIcons name={'file-document-edit-outline'} size={18} color={'#535763'} style={{opacity:0.5}} />
           </View>
-          <Text style={{fontSize:13,fontWeight:'bold',color:'#535763',opacity:0.5}}>আবেদনসমূহ</Text>
+          <Text style={{fontSize:13,fontWeight:'bold',color:'#535763',opacity:0.5}}>ব্যাংক</Text>
         </Pressable>
         <Pressable onPress={()=>{navigation.navigate('Support');props.navigation.closeDrawer();}}  android_ripple={{color: '#F0F0F0'}} style={{width:180,height:50,borderRadius:25,alignSelf:'center',paddingTop:15,paddingLeft:15,flexDirection:'row'}}>
           <View style={{width:30}}>
@@ -83,7 +77,7 @@ const CustomDrawerContent = (props) => {
         </Pressable>
         
       </View>
-      <View style={{width:'100%',height:0.3,backgroundColor:'#535763',opacity:0.5,marginTop:10,marginBottom:10}}></View>
+      <View style={{width:'100%',height:0.3,backgroundColor:'#535763',opacity:0.5,marginBottom:10}}></View>
       <View >
         <Pressable onPress={()=>{
           dispatch({ type: 'SET_FULL_LOADING', payload: true });
@@ -110,7 +104,7 @@ const CustomDrawerContent = (props) => {
           
           }} android_ripple={{color: '#F0F0F0'}} style={{width:180,height:50,borderRadius:25,alignSelf:'center',paddingTop:15,paddingLeft:15,flexDirection:'row'}}>
           
-          <Text style={{fontSize:13,fontWeight:'bold',color:'#535763',opacity:0.5}}>Version {appVersion}</Text>
+          <Text style={{fontSize:13,fontWeight:'bold',color:'#535763',opacity:0.5}}>ভার্সান {appVersion}</Text>
         </Pressable>
         
       </View>
@@ -125,11 +119,11 @@ const CustomDrawerContent = (props) => {
         <View style={{width:180,height:30,margin:10,padding:3,backgroundColor:'#F0F0F0',alignSelf:'center',borderRadius:20,flexDirection:'row'}}>
           <Pressable style={{padding:3,backgroundColor:currentTheme !== 'light'?'#fff':null,width:90,borderRadius:15,paddingLeft:10,marginLeft:3,flexDirection:'row',alignItems:'center',elevation:currentTheme !== 'light'?3:0}}>
             <MaterialIcons name="wb-sunny" size={15} color={'#535763'} style={{opacity:0.5,marginRight:10}} />
-            <Text style={{color:'#535763',fontSize:13,fontWeight:'bold',opacity:0.5,marginTop:-3}}>Light</Text>
+            <Text style={{color:'#535763',fontSize:13,fontWeight:'bold',opacity:0.5,marginTop:-3}}>লাইট</Text>
           </Pressable>
           <Pressable style={{padding:3,backgroundColor:currentTheme === 'light'?'#fff':null,width:90,borderRadius:15,paddingLeft:15,marginRight:3,marginLeft:-10,flexDirection:'row',alignItems:'center',elevation:currentTheme === 'light'?3:0}}>
             <Feather name="moon" size={15} color={'#535763'} style={{opacity:0.5,marginRight:10}} />
-            <Text style={{color:'#535763',fontSize:13,fontWeight:'bold',opacity:0.5,marginTop:-3}}>Dark</Text>
+            <Text style={{color:'#535763',fontSize:13,fontWeight:'bold',opacity:0.5,marginTop:-3}}>ডার্ক</Text>
           </Pressable>
         </View>
       </View>

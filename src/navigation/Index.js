@@ -23,6 +23,7 @@ import LoadingBar from '../components/LoadingBar';
 import AppStatusBar from '../components/AppStatusBar';
 import FullPageLoader from '../components/FullPageLoader';
 import Registration from '../screens/auth/Registration';
+import Service from '../screens/dashboard/Service';
 
 function HomeTabs() {
   const navigation = useNavigation();
@@ -60,7 +61,7 @@ function HomeTabs() {
             <View
               style={{ alignItems: 'center', justifyContent: 'center', top: 5 }}>
               <MaterialIcons name="category" size={20} color={color} />
-              <Text style={{fontSize:8,fontWeight:'bold',color:color}}>ক্যাটাগরি</Text>
+              <Text style={{fontSize:8,fontWeight:'bold',color:color}}>ক্লাইন্টস</Text>
             </View>
           ),
         }}
@@ -177,7 +178,7 @@ function HomeStack() {
       <Stack.Screen name="Checkout" options={customTransition} component={Checkout} />
       <Stack.Screen name="Profile" options={customTransition} component={Profile} />
       <Stack.Screen name="Meetings" options={customTransition} component={Meetings} />
-      <Stack.Screen name="Favourites" options={customTransition} component={Favourites} />
+      <Stack.Screen name="Service" options={customTransition} component={Service} />
       <Stack.Screen name="Documents" options={customTransition} component={Documents} />
       <Stack.Screen name="Tutorial" options={customTransition} component={Tutorial} />
       <Stack.Screen name="Applications" options={customTransition} component={Applications} />

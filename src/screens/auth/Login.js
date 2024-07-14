@@ -103,6 +103,7 @@ const Login = () => {
         if(userDetails.hasOwnProperty("token")){
           dispatch({ type: 'SET_LOGGED', payload: true });
           await AsyncStorage.setItem("loggedIn","true");
+          await AsyncStorage.setItem("token",userDetails?.token);
           if(userDetails.user.first_name){
             await AsyncStorage.setItem("firstName",userDetails.user.first_name);
           dispatch({ type: 'SET_NAME', payload: userDetails.user.first_name+' '+userDetails.user.last_name });
@@ -117,6 +118,13 @@ const Login = () => {
           if(userDetails.user.phone_number){
             await  AsyncStorage.setItem("phoneNumber",phone);
             dispatch({ type: 'SET_PHONE_NUMBER', payload: userDetails.user.phone_number });
+          }  
+          if(userDetails.user.balance){
+            await  AsyncStorage.setItem("balance",userDetails?.user?.balance?.toString());
+            dispatch({ type: 'SET_balance', payload: userDetails.user.balance });
+          }  
+          if(userDetails.token){
+            dispatch({ type: 'SET_TOKEN', payload: userDetails.token });
           }  
           if(userDetails.user.profile_picture){
             await  AsyncStorage.setItem("profilePicture",userDetails.user.profile_picture);
@@ -134,134 +142,6 @@ const Login = () => {
       setOtpState(false);
       setLoading(false);
     }
-  }
-
-  const initUser = async(token,details) => {
-    fetch('https://graph.facebook.com/v2.5/me?fields=email,name,friends&access_token=' + token)
-      .then((response) => response.json())
-      .then(async (json) => {
-      dispatch({ type: 'SET_FULL_LOADING', payload: true }); 
-      if(details.hasOwnProperty('name')){
-        var name = details.name;
-        var nameParts = name.split(' ');
-        var firstName = nameParts[0];
-        var lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : '';
-        const userDetails = await socialLoginApi({email:json.email,firstName:firstName,lastName:lastName,profilePicture:details.imageURL,pushToken:pushToken});
-        console.log(userDetails);
-        if(userDetails.hasOwnProperty("token")){
-         await AsyncStorage.setItem("loggedIn","true");
-         await AsyncStorage.setItem("id",userDetails.user.id.toString());
-         dispatch({ type: 'SET_LOGGED', payload: true });
-         dispatch({ type: 'SET_ID', payload: userDetails.user.id.toString() });
-          if(userDetails.user.first_name){
-          await AsyncStorage.setItem("firstName",userDetails.user.first_name);
-          dispatch({ type: 'SET_NAME', payload: userDetails.user.first_name+' '+userDetails.user.last_name });
-          }
-          if(userDetails.user.last_name){
-          await  AsyncStorage.setItem("lastName",userDetails.user.last_name);
-          }      
-          if(userDetails.user.email){
-          await  AsyncStorage.setItem("email",userDetails.user.email);
-            dispatch({ type: 'SET_EMAIL', payload: userDetails.user.email });
-          }        
-          if(userDetails.user.profile_picture){
-          await  AsyncStorage.setItem("profilePicture",userDetails.user.profile_picture);
-            dispatch({ type: 'SET_DP', payload: userDetails.user.profile_picture });
-          }
-          dispatch({ type: 'SET_FULL_LOADING', payload: false });        
-        }
-        const userMail = await AsyncStorage.setItem('email', json.email);
-        dispatch({ type: 'SET_EMAIL', payload: userMail });
-      }})
-      .catch(() => {
-        reject('ERROR GETTING DATA FROM FACEBOOK');
-      })
-  }
-
-
-  const facebookLogin = () =>{
-    LoginManager.setLoginBehavior(Platform.OS === 'ios' ? 'web_only' : 'NATIVE_ONLY');
-    LoginManager.logInWithPermissions(["public_profile","email"]).then(
-      (result)=> {
-        console.log(result);
-        if (result.isCancelled) {
-          console.log("Login cancelled");
-        } else {
-          const currentProfile = Profile.getCurrentProfile().then(
-            async (currentProfile) => {
-              if (currentProfile) {
-                console.log('fb details',currentProfile);
-                var name = currentProfile.name;
-                var nameParts = name.split(' ');
-                var firstName = nameParts[0];
-                var lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : '';
-                const loginFirstName = await AsyncStorage.setItem("firstName", firstName);
-                const loginLastName = await AsyncStorage.setItem("lastName", lastName);
-                await AccessToken.getCurrentAccessToken().then((data) => {
-                  const { accessToken } = data
-                  initUser(accessToken,currentProfile);
-                })
-                
-              }
-            }
-          );
-        }
-      },
-      (error)=> {
-        console.log("Login fail with error: " + error);
-      }
-    );
-  }
-
-  const googleLogin = async()=>{
-
-    try {
-      GoogleSignin.configure({
-
-      })
-      await GoogleSignin.hasPlayServices();
-      const userInfo = await GoogleSignin.signIn();
-      dispatch({ type: 'SET_FULL_LOADING', payload: true }); 
-      console.log(userInfo);
-      if(userInfo.hasOwnProperty('idToken')){
-        const userDetails = await socialLoginApi({email:userInfo.user.email,firstName:userInfo.user.givenName,lastName:userInfo.user.familyName,profilePicture:userInfo.user.photo,pushToken:pushToken});
-        console.log(userDetails);
-        if(userDetails.hasOwnProperty("token")){
-         await AsyncStorage.setItem("loggedIn","true");
-         await AsyncStorage.setItem("id",userDetails.user.id.toString());
-         dispatch({ type: 'SET_LOGGED', payload: true });
-         dispatch({ type: 'SET_ID', payload: userDetails.user.id.toString() });
-          if(userDetails.user.first_name){
-          await AsyncStorage.setItem("firstName",userDetails.user.first_name);
-          dispatch({ type: 'SET_NAME', payload: userDetails.user.first_name+' '+userDetails.user.last_name });
-          }
-          if(userDetails.user.last_name){
-          await  AsyncStorage.setItem("lastName",userDetails.user.last_name);
-          }      
-          if(userDetails.user.email){
-          await  AsyncStorage.setItem("email",userDetails.user.email);
-            dispatch({ type: 'SET_EMAIL', payload: userDetails.user.email });
-          }        
-          if(userDetails.user.profile_picture){
-          await  AsyncStorage.setItem("profilePicture",userDetails.user.profile_picture);
-            dispatch({ type: 'SET_DP', payload: userDetails.user.profile_picture });
-          }
-          dispatch({ type: 'SET_FULL_LOADING', payload: false });        
-        }
-      }
-    } catch (error) {
-      dispatch({ type: 'SET_FULL_LOADING', payload: false }); 
-      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        console.log('cancelled');
-      } else if (error.code === statusCodes.IN_PROGRESS) {
-        console.log('In progress');
-      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        console.log('No play service');
-      } else {
-        console.log('details',error);
-      }
-    }
-
   }
   return (
     <Container>
