@@ -7,4 +7,5 @@ export const colors = {
     white:'#fff',
     whiteDeep:'#a4a2a8',
     primary:'#F04F20',
+    primaryBg:'#795548'
 }

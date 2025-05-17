@@ -89,6 +89,7 @@ const Login = () => {
       setOtpState(true);
       setLoading(false);
     }catch(e){
+      console.log(e)
       ToastAndroid.show("Failed to login. Try again later", ToastAndroid.SHORT);
       setLoading(false);
     }
@@ -97,7 +98,6 @@ const Login = () => {
       try {
         await confirmation.confirm(otp);
         await dispatch({ type: 'SET_FULL_LOADING', payload: true });
-
         const userDetails =  await loginApiCall({phoneNumber:phone,push_token:registrationPayload?.pushToken});
         console.log(userDetails);
         if(userDetails.hasOwnProperty("token")){
@@ -145,14 +145,14 @@ const Login = () => {
   }
   return (
     <Container>
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : -40} style={{backgroundColor:'#000',flex:1}}>
-        <ScrollView keyboardShouldPersistTaps="handled" automaticallyAdjustKeyboardInsets={true} contentContainerStyle={{backgroundColor:'#000'}}>
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : -40} style={{backgroundColor:colors.primaryBg,flex:1}}>
+        <ScrollView keyboardShouldPersistTaps="handled" automaticallyAdjustKeyboardInsets={true} contentContainerStyle={{backgroundColor:colors.primaryBg}}>
       <Image source={require('../../assets/bgone.jpg')} style={{position:'absolute',top:0,height:Sizes.fullWidth,width:Sizes.fullWidth,opacity:0.8}} />
       <View style={[Styles.div,Styles.alignRight]}>
         <ToggleSwitch trueLabel={'বাংলা'} falseLabel={'ENG'} trueState={isEnabled} onToggle={toggleSwitch} />
       </View>
-      <Svg xmlns="http://www.w3.org/2000/svg" style={{position:'absolute',top:70,elevation:10}} width={Sizes.fullWidth} height="336" viewBox="0 0 574 436" fill="none">
-          <Path d="M573 435H64H2.99999V252C-1.00001 245 -2.60001 240.4 23 278C48.6 315.6 71 309 64 278L44 192C34 123 92 155 110 192L153 252C250 350 231 245 231 245C231 245 183 136.8 183 132C153 51 225 61 265 132L327 231C394 331 441.333 270.667 422 231L327 83C272.6 -65 367.667 21.3333 422 83L573 262V435Z" fill="#000" stroke="#000"/>
+      <Svg xmlns="http://www.w3.org/2000/svg" style={{position:'absolute',top:100,elevation:10}} width={Sizes.fullWidth} height="336" viewBox="0 0 574 436" fill="none">
+          <Path d="M573 435H64H2.99999V252C-1.00001 245 -2.60001 240.4 23 278C48.6 315.6 71 309 64 278L44 192C34 123 92 155 110 192L153 252C250 350 231 245 231 245C231 245 183 136.8 183 132C153 51 225 61 265 132L327 231C394 331 441.333 270.667 422 231L327 83C272.6 -65 367.667 21.3333 422 83L573 262V435Z" fill={colors.primaryBg} stroke={colors.primaryBg}/>
       </Svg>
       <View style={[Styles.div,{marginTop:150,marginBottom:0},Styles.alignCenter]}>
       <Image source={require('../../assets/logo.png')} style={Styles.logo} />
