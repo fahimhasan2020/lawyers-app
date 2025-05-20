@@ -16,6 +16,7 @@ import { useNavigation } from '@react-navigation/native';
 const Registration = () => {
     const { t, i18n } = useTranslation();
     const navigation = useNavigation();
+    const dispatch = useDispatch();
     const [registrationStep,setRegistrationStep] = useState(t('1'));
     const registrationPayload = useSelector(state => state.auth.registrationPayload);
     const [validationErrorsStepOne,setValidationErrorsStepOne] = useState(false);
@@ -175,16 +176,20 @@ const Registration = () => {
           datas['llm_certificate'] = certificateUploadllm;
         }
         const response = await registerApiCall(datas);
+        await dispatch({ type: 'SET_FULL_LOADING', payload: true });
         console.log(response);
         if(response?.success){
           fireMessage("Registration completed. Wait for admin approval","success");
+          await dispatch({ type: 'SET_FULL_LOADING', payload: false });
           navigation.goBack();
         }else{
           console.log(response?.message);
+          await dispatch({ type: 'SET_FULL_LOADING', payload: false });
           fireMessage("Please enter unique phone number and email","danger");
         }
         
       }catch(e){
+        await dispatch({ type: 'SET_FULL_LOADING', payload: false });
         console.log(e);
       }
     }
