@@ -105,7 +105,7 @@ const Login = () => {
       try {
         console.log("local",otp);
         console.log("server",otpResponse);
-        if(otp == otpResponse || (phone == '01711432259' && otp == '584236')){
+        if(otp == otpResponse || (phone == '01711432259' && otp == '5842')){
           await dispatch({ type: 'SET_FULL_LOADING', payload: true });
           const userDetails =  await loginApiCall({phoneNumber:phone,push_token:registrationPayload?.pushToken});
           console.log(userDetails);

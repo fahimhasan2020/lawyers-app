@@ -9,7 +9,7 @@ const DrawerContainer = ({children,title='',showGear=false}) => {
   const navigation = useNavigation()
   return (
     <View style={styles.content}>
-        <Svg xmlns="http://www.w3.org/2000/svg" width={Sizes.fullWidth+20} height="296" viewBox="0 0 632 493" fill="green">
+        <Svg xmlns="http://www.w3.org/2000/svg" width={Sizes.fullWidth} height="320" viewBox="0 0 632 493" fill="green">
             <Path d="M631 0H0V119.757C33.6 239.514 66 275.441 122 275.441H482C562 275.441 625 419.15 631 493V0Z" fill="#000" stroke="#000"/>
         </Svg>
         
