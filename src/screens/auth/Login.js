@@ -108,7 +108,7 @@ const Login = () => {
         if(otp == otpResponse || (phone == '01711432259' && otp == '5842')){
           await dispatch({ type: 'SET_FULL_LOADING', payload: true });
           const userDetails =  await loginApiCall({phoneNumber:phone,push_token:registrationPayload?.pushToken});
-          console.log(userDetails);
+          console.log(userDetails);1
           setOtp('')
           if(userDetails.hasOwnProperty("token")){
             dispatch({ type: 'SET_LOGGED', payload: true });
