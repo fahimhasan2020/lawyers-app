@@ -8,24 +8,21 @@ import Sizes from '../../themes/Sizes';
 import { Svg,Path } from 'react-native-svg';
 import PrimaryButton from '../../components/Buttons';
 import {ConnectionStatusBar} from "react-native-ui-lib"
-import Entypo from "react-native-vector-icons/Entypo"
-import FontAwesome from "react-native-vector-icons/FontAwesome"
 import { colors } from '../../constants/colors';
 import {useNavigation} from "@react-navigation/native"
 import { useDispatch,useSelector } from 'react-redux';
 import { hideNavigationBar } from 'react-native-navigation-bar-color'
-import { LoginManager,Profile,AccessToken } from "react-native-fbsdk-next";
 import { useTranslation } from 'react-i18next';
 import auth from "@react-native-firebase/auth"
-import app from "@react-native-firebase/app"
-import database, { firebase } from '@react-native-firebase/database';
+import { firebase } from '@react-native-firebase/database';
 import OTPInputView from '@twotalltotems/react-native-otp-input'
-import { GoogleSignin, statusCodes, GoogleSigninButton, } from '@react-native-google-signin/google-signin';
 import loginApiCall from '../../data/api/LoginApi';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { socialLoginApi } from '../../data/api/SocialLoginApi';
 import senOtpApiCall from '../../data/api/SendOtp';
-import { cleanSingle } from 'react-native-image-crop-picker';
+import { zegoVars } from '../../constants/zegoconbtrols';
+import ZegoUIKitPrebuiltCallService from '@zegocloud/zego-uikit-prebuilt-call-rn'
+import * as ZIM from 'zego-zim-react-native';
+import * as ZPNs from 'zego-zpns-react-native';
 const firebaseConfig = {
   apiKey: "AIzaSyCa16BlVHZhJZonJarcCicBa3l_S2yyAN0",
   projectId: "ukilvai-app",
@@ -41,10 +38,8 @@ const Login = () => {
   const [otp, setOtp] = useState("");
   const [otpResponse, setOtpResponse] = useState("");
   const registrationPayload = useSelector(state => state.auth.registrationPayload);
-  const [confirmation, setConfirmation] = useState(null);
   const [loading, setLoading] = useState(false);
   const [phone, setPhone] = useState('');
-  const [userInfo, setUserInfo] = useState({});
   const [errorMessage, setErrorMessage] = useState('');
   const toggleSwitch = () => {
     if(isEnabled){
@@ -105,7 +100,7 @@ const Login = () => {
       try {
         console.log("local",otp);
         console.log("server",otpResponse);
-        if(otp == otpResponse || (phone == '01711432259' && otp == '5842')){
+        if(otp == otpResponse || (phone == '1711432259' && otp == '5842')){
           await dispatch({ type: 'SET_FULL_LOADING', payload: true });
           const userDetails =  await loginApiCall({phoneNumber:phone,push_token:registrationPayload?.pushToken});
           console.log(userDetails);1
@@ -124,6 +119,36 @@ const Login = () => {
             if(userDetails.user.id){
               await  AsyncStorage.setItem("id",userDetails.user.id.toString());
               dispatch({ type: 'SET_ID', payload: userDetails.user.id.toString() });
+              await ZegoUIKitPrebuiltCallService.init(
+                zegoVars?.appId,
+                zegoVars?.appSign,
+                'lawyer' + userDetails?.user?.id,
+                userDetails?.user?.first_name
+                  ? userDetails?.user?.first_name
+                  : 'Lawyer',
+                [ZIM, ZPNs],
+                {
+                  ringtoneConfig: {
+                    incomingCallFileName: 'calling.mp3',
+                    outgoingCallFileName: 'calling.mp3',
+                  },
+                  enableNotifyWhenAppRunningInBackgroundOrQuit:true,
+                  androidNotificationConfig: {
+                    channelID: 'ZegoUIKit',
+                    channelName: 'ZegoUIKit',
+                  },
+                },
+              
+              ).then(() => {
+                ZegoUIKitPrebuiltCallService.requestSystemAlertWindow({
+                  message:
+                    'We need your consent for the following permissions in order to use the offline call function properly',
+                  allow: 'Allow',
+                  deny: 'Deny',
+                });
+              });
+              console.log("user id",userDetails.user.id);
+              console.log("user name",userDetails.user.first_name);
             }
             if(userDetails.user.phone_number){
               await  AsyncStorage.setItem("phoneNumber",phone);
@@ -158,7 +183,7 @@ const Login = () => {
       } catch (error) {
         ToastAndroid.show("OTP did not matched", ToastAndroid.SHORT);
         dispatch({ type: 'SET_FULL_LOADING', payload: false });
-        console.log('Invalid code.');
+        console.log('Invalid code.',error);
         setOtp('');
         setLoading(false);
       }

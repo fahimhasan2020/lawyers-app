@@ -14,6 +14,7 @@ import { useNavigation } from '@react-navigation/native';
 import Sizes from '../themes/Sizes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { appVersion } from '../constants/appversion';
+import ZegoUIKitPrebuiltCallService from '@zegocloud/zego-uikit-prebuilt-call-rn'
 const CustomDrawerContent = (props) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -84,6 +85,7 @@ const CustomDrawerContent = (props) => {
           setTimeout(()=>{
              dispatch({ type: 'SET_LOGGED', payload: false });
              AsyncStorage.setItem("loggedIn","false");
+             ZegoUIKitPrebuiltCallService.uninit()
           },1500);
           setTimeout(()=>{
             dispatch({ type: 'SET_FULL_LOADING', payload: false });

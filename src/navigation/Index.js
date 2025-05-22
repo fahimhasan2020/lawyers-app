@@ -1,30 +1,24 @@
-import { StyleSheet, Text, View,TouchableOpacity,Pressable,Image } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { createStackNavigator,CardStyleInterpolators } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-import { Applications, CallingScreen, Categories, Chat, Checkout, Documents, Favourites, Home, LawyerDetails, Login, MeetingScreen, Meetings, More, Notifications, PaymentWindow, PrivacyPolicy, Profile, Settings, Splash, Success, Support, TermsAndConditions, Tutorial } from './src';
+import { Applications, Categories, Chat, Checkout, Documents, Home, LawyerDetails, Login, Meetings, More, Notifications, PrivacyPolicy, Profile, Settings, Splash, Support, TermsAndConditions, Tutorial } from './src';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AntDesign from "react-native-vector-icons/AntDesign"
-import FontAwesome from "react-native-vector-icons/FontAwesome"
-import Entypo from "react-native-vector-icons/Entypo"
 import IonIcons from "react-native-vector-icons/Ionicons"
 import MaterialIcons from "react-native-vector-icons/MaterialIcons"
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
-import Feather from "react-native-vector-icons/Feather"
-import { createDrawerNavigator,DrawerContent,DrawerContentScrollView,DrawerItem,DrawerItemList } from '@react-navigation/drawer';
-import { useDispatch,useSelector } from 'react-redux';
-import { Svg,Path } from 'react-native-svg';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { useSelector } from 'react-redux';
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 import { useNavigation } from '@react-navigation/native';
-import Sizes from '../themes/Sizes';
 import CustomDrawerContent from './CustomDrawerContent';
 import LoadingBar from '../components/LoadingBar';
 import AppStatusBar from '../components/AppStatusBar';
 import FullPageLoader from '../components/FullPageLoader';
 import Registration from '../screens/auth/Registration';
 import Service from '../screens/dashboard/Service';
-
+import {ZegoCallInvitationDialog,ZegoUIKitPrebuiltCallInCallScreen,ZegoUIKitPrebuiltCallWaitingScreen} from "@zegocloud/zego-uikit-prebuilt-call-rn"
 function HomeTabs() {
   const navigation = useNavigation();
   return (
@@ -187,10 +181,14 @@ function HomeStack() {
       <Stack.Screen name="PrivacyPolicy" options={customTransition} component={PrivacyPolicy} />
       <Stack.Screen name="Notifications" options={customTransition} component={Notifications} />
       <Stack.Screen name="Support" options={customTransition} component={Support} />
-      <Stack.Screen name="Success" options={customTransition} component={Success} />
-      <Stack.Screen name="CallingScreen" component={CallingScreen} />
-      <Stack.Screen name="MeetingScreen" component={MeetingScreen} />
-      <Stack.Screen name="PaymentWindow" component={PaymentWindow} />
+      <Stack.Screen
+          name="ZegoUIKitPrebuiltCallWaitingScreen"
+          component={ZegoUIKitPrebuiltCallWaitingScreen}
+      />
+      <Stack.Screen
+          name="ZegoUIKitPrebuiltCallInCallScreen"
+          component={ZegoUIKitPrebuiltCallInCallScreen}
+      />
       <Stack.Screen
       options={{
         transitionSpec: {
@@ -279,6 +277,7 @@ const Index = () => {
   const statusText = useSelector(state => state.statusstore.statusText);
   const statusColor = useSelector(state => state.statusstore.statusBarBackgroundColor);
   return <NavigationContainer theme={{ colors: { background: '#000000' } }}>
+    <ZegoCallInvitationDialog />
     {loggedIn?<HomeStack />:<AuthStack />}
     {loading?<LoadingBar />:null}
     {showStatus?<AppStatusBar textDialog={statusText} color={statusColor} />:null}
