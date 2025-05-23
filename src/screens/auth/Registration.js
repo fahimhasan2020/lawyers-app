@@ -150,6 +150,7 @@ const Registration = () => {
     }
     const completeRegistration = async()=>{
       try{
+        await dispatch({ type: 'SET_LOADING_BAR', payload: true });
         const certificateUploadllb = await uploadFileToServer(registrationPayload?.llbCertificate,'application/pdf');
         const profilePicture = await uploadFileToServer(registrationPayload?.profilePicture,'image/jpeg');
         const datas = {
@@ -176,21 +177,18 @@ const Registration = () => {
           datas['llm_certificate'] = certificateUploadllm;
         }
         const response = await registerApiCall(datas);
-        await dispatch({ type: 'SET_FULL_LOADING', payload: true });
-        console.log(response);
         if(response?.success){
           fireMessage("Registration completed. Wait for admin approval","success");
-          await dispatch({ type: 'SET_FULL_LOADING', payload: false });
           navigation.goBack();
         }else{
-          console.log(response?.message);
-          await dispatch({ type: 'SET_FULL_LOADING', payload: false });
+          console.log(response);
           fireMessage("Please enter unique phone number and email","danger");
         }
+        await dispatch({ type: 'SET_LOADING_BAR', payload: false });
         
       }catch(e){
-        await dispatch({ type: 'SET_FULL_LOADING', payload: false });
-        console.log(e);
+        console.log("error reason",e);
+        await dispatch({ type: 'SET_LOADING_BAR', payload: false });
       }
     }
   return (

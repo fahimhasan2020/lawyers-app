@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { createStackNavigator,CardStyleInterpolators } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-import { Applications, Categories, Chat, Checkout, Documents, Home, LawyerDetails, Login, Meetings, More, Notifications, PrivacyPolicy, Profile, Settings, Splash, Support, TermsAndConditions, Tutorial } from './src';
+import { Applications, CaseDetails, Categories, Chat, Checkout, Documents, Home, LawyerDetails, Login, Meetings, More, Notifications, PrivacyPolicy, Profile, Settings, Splash, Support, TermsAndConditions, Tutorial } from './src';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AntDesign from "react-native-vector-icons/AntDesign"
 import IonIcons from "react-native-vector-icons/Ionicons"
@@ -169,6 +169,7 @@ function HomeStack() {
   return (
     <Stack.Navigator screenOptions={{headerShown:false,gestureEnabled:true,gestureDirection:'vertical'}}>
       <Stack.Screen name="TabsHome" component={HomeDrawer} />
+      <Stack.Screen name="CaseDetails" component={CaseDetails} />
       <Stack.Screen name="Checkout" options={customTransition} component={Checkout} />
       <Stack.Screen name="Profile" options={customTransition} component={Profile} />
       <Stack.Screen name="Meetings" options={customTransition} component={Meetings} />

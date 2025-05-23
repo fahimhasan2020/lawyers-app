@@ -23,6 +23,7 @@ import { zegoVars } from '../../constants/zegoconbtrols';
 import ZegoUIKitPrebuiltCallService from '@zegocloud/zego-uikit-prebuilt-call-rn'
 import * as ZIM from 'zego-zim-react-native';
 import * as ZPNs from 'zego-zpns-react-native';
+import { firebasesetup } from '../../utility/firebasesetup';
 const firebaseConfig = {
   apiKey: "AIzaSyCa16BlVHZhJZonJarcCicBa3l_S2yyAN0",
   projectId: "ukilvai-app",
@@ -57,7 +58,7 @@ const Login = () => {
         hideNavigationBar();
        
         firebase.initializeApp(firebaseConfig);
-        
+        firebasesetup();
         const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
         return subscriber; 
       },[]);
@@ -101,8 +102,13 @@ const Login = () => {
         console.log("local",otp);
         console.log("server",otpResponse);
         if(otp == otpResponse || (phone == '1711432259' && otp == '5842')){
+          let pushTokenValue = 'sfhjbrwjhvbwrhvb';
+          const pushToken =  AsyncStorage.getItem("pushToken");
+          if(pushToken){
+            pushTokenValue = pushToken;
+          }
           await dispatch({ type: 'SET_FULL_LOADING', payload: true });
-          const userDetails =  await loginApiCall({phoneNumber:phone,push_token:registrationPayload?.pushToken});
+          const userDetails =  await loginApiCall({phoneNumber:phone,push_token:pushTokenValue});
           console.log(userDetails);1
           setOtp('')
           if(userDetails.hasOwnProperty("token")){
@@ -119,34 +125,6 @@ const Login = () => {
             if(userDetails.user.id){
               await  AsyncStorage.setItem("id",userDetails.user.id.toString());
               dispatch({ type: 'SET_ID', payload: userDetails.user.id.toString() });
-              await ZegoUIKitPrebuiltCallService.init(
-                zegoVars?.appId,
-                zegoVars?.appSign,
-                'lawyer' + userDetails?.user?.id,
-                userDetails?.user?.first_name
-                  ? userDetails?.user?.first_name
-                  : 'Lawyer',
-                [ZIM, ZPNs],
-                {
-                  ringtoneConfig: {
-                    incomingCallFileName: 'calling.mp3',
-                    outgoingCallFileName: 'calling.mp3',
-                  },
-                  enableNotifyWhenAppRunningInBackgroundOrQuit:true,
-                  androidNotificationConfig: {
-                    channelID: 'ZegoUIKit',
-                    channelName: 'ZegoUIKit',
-                  },
-                },
-              
-              ).then(() => {
-                ZegoUIKitPrebuiltCallService.requestSystemAlertWindow({
-                  message:
-                    'We need your consent for the following permissions in order to use the offline call function properly',
-                  allow: 'Allow',
-                  deny: 'Deny',
-                });
-              });
               console.log("user id",userDetails.user.id);
               console.log("user name",userDetails.user.first_name);
             }

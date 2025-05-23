@@ -69,6 +69,8 @@ const auth = (state = initialState, action) => {
       return {...state, balance: action.payload};
     case 'SET_ONLINE':
       return {...state, online: action.payload};
+    case 'SET_LOADING_BAR':
+      return {...state, loading: action.payload};
     case 'SET_ID':
       return {...state, id: action.payload};
     default:

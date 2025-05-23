@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React,{useRef,useEffect} from 'react'
 import LottieView from "lottie-react-native";
+import Sizes from '../themes/Sizes';
 const LoadingBar = () => {
     const animationRef = useRef<LottieView>(null);
 
@@ -9,19 +10,25 @@ const LoadingBar = () => {
     animationRef.current?.play(30, 120);
   }, []);
   return (
-    <View style={styles.container}>
+    <View style={styles.mainContainer}><View style={styles.container}>
       <LottieView
       style={styles.animationStyle}
       autoPlay loop
       source={require("../assets/animations/loading.json")}
     />
-    </View>
-  )
+    </View></View>)
 }
 
 export default LoadingBar
 
 const styles = StyleSheet.create({
+mainContainer:{
+  position:'absolute',
+  top:0,
+  left:0,
+  height:Sizes.fullHeight+100,
+  width:Sizes.fullWidth
+},
 container:{
     position:'absolute',
     top:'45%',

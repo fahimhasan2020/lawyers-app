@@ -20,5 +20,5 @@ import Notifications from "../screens/dashboard/Notifications";
 import TermsAndConditions from "../screens/dashboard/TermsAndConditions";
 import Meetings from "../screens/dashboard/Meetings";
 import PrivacyPolicy from "../screens/dashboard/PrivacyPolicy";
-
-export {Login,Splash,Intro,Home,Chat,More,Categories,LawyerDetails,Checkout,Success,PaymentWindow,Profile,Favourites,Documents,Tutorial,Applications,Support,Settings,Notifications,TermsAndConditions,PrivacyPolicy,Meetings}
+import CaseDetails from "../screens/dashboard/CaseDetails";
+export {Login,Splash,Intro,CaseDetails,Home,Chat,More,Categories,LawyerDetails,Checkout,Success,PaymentWindow,Profile,Favourites,Documents,Tutorial,Applications,Support,Settings,Notifications,TermsAndConditions,PrivacyPolicy,Meetings}
