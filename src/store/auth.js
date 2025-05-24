@@ -1,6 +1,7 @@
 const initialState = {
   loggedIn: false,
   countryCode: '+880',
+  currentLocation:'',
   userDp:'',
   token: '',
   phoneNumber: '',
@@ -43,6 +44,8 @@ const auth = (state = initialState, action) => {
   switch (action.type) {
     case 'SET_LOGGED':
       return {...state, loggedIn: action.payload};
+    case 'SET_CURRENT_LOCATION':
+      return {...state, currentLocation: action.payload};
     case 'UPDATE_REGISTRATION_PAYLOAD':
       return {
         ...state,

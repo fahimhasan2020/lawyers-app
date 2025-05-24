@@ -19,6 +19,9 @@ import FullPageLoader from '../components/FullPageLoader';
 import Registration from '../screens/auth/Registration';
 import Service from '../screens/dashboard/Service';
 import {ZegoCallInvitationDialog,ZegoUIKitPrebuiltCallInCallScreen,ZegoUIKitPrebuiltCallWaitingScreen} from "@zegocloud/zego-uikit-prebuilt-call-rn"
+import SearchResult from '../screens/dashboard/SearchResult';
+import OrderHistory from '../screens/dashboard/OrderHistory';
+import Location from '../screens/dashboard/Location';
 function HomeTabs() {
   const navigation = useNavigation();
   return (
@@ -63,23 +66,16 @@ function HomeTabs() {
         component={Categories}
       />
       <Tab.Screen
-      listeners={{
-        tabPress: e => {
-          e.preventDefault();
-            navigation.navigate('ChatScreen');
-          
-        },
-      }}
       options={{
         tabBarIcon: ({ color, size }) => (
           <View
             style={{ alignItems: 'center', justifyContent: 'center', top: 5 }}>
-            <IonIcons name="chatbubble" size={20} color={color} />
-            <Text style={{fontSize:8,fontWeight:'bold',color:color}}>চ্যাট</Text>
+            <MaterialIcons name="history" size={20} color={color} />
+            <Text style={{fontSize:8,fontWeight:'bold',color:color}}>হিস্টোরি</Text>
           </View>
         ),
       }}
-      name="Chat" component={Chat} />
+      name="Chat" component={OrderHistory} />
       <Tab.Screen 
       options={{
         tabBarIcon: ({ color, size }) => (
@@ -169,7 +165,9 @@ function HomeStack() {
   return (
     <Stack.Navigator screenOptions={{headerShown:false,gestureEnabled:true,gestureDirection:'vertical'}}>
       <Stack.Screen name="TabsHome" component={HomeDrawer} />
+      <Stack.Screen name="Location" component={Location} />
       <Stack.Screen name="CaseDetails" component={CaseDetails} />
+      <Stack.Screen name="SearchResult" component={SearchResult} />
       <Stack.Screen name="Checkout" options={customTransition} component={Checkout} />
       <Stack.Screen name="Profile" options={customTransition} component={Profile} />
       <Stack.Screen name="Meetings" options={customTransition} component={Meetings} />

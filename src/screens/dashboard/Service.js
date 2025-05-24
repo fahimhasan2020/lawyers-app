@@ -32,6 +32,7 @@ const Service = () => {
         <Text style={styles.name}>সার্ভিস লিস্ট</Text>
       </View>
      <FlatList
+     ListEmptyComponent={()=>(<View style={{flex:1,alignItems:'center',justifyContent:'center'}}><Text style={{color:'#000'}}>No item available</Text></View>)}
      style={{marginTop:50}}
      showsVerticalScrollIndicator={false}
      contentContainerStyle={{marginLeft:10,paddingBottom:200}}

@@ -4,18 +4,21 @@ import DrawerContainer from '../../components/DrawerContainer'
 import { useRoute } from '@react-navigation/native'
 import getUserDetailsApi from '../../data/api/GetUserDetailsApi'
 
-import ZegoUIKitPrebuiltCallService,{ZegoSendCallInvitationButton} from '@zegocloud/zego-uikit-prebuilt-call-rn';
+import {ZegoSendCallInvitationButton} from '@zegocloud/zego-uikit-prebuilt-call-rn';
+import FullPageLoader from '../../components/FullPageLoader'
 
 const CaseDetails = () => {
 const route = useRoute();  
+const [apiCalling,setApiCalling] = useState(false);
 const [userDetails,setUserDetails] = useState(null)
   useEffect(()=>{
     getUserDetailsData();
   },[])
   const getUserDetailsData = async ()=>{
+    setApiCalling(true);
     const datas = await getUserDetailsApi({id:route?.params?.user_id});
-    console.log(datas)
     setUserDetails(datas);
+    setApiCalling(false)
   }
   
   const formatSQLDateTime =(sqlDateTime)=> {
@@ -44,7 +47,7 @@ const [userDetails,setUserDetails] = useState(null)
       <View style={styles.nameConteiner}>
         <Text style={styles.name}>Case Details</Text>
       </View>
-     <View style={styles.detailsBox}>
+     {apiCalling?<View style={{marginTop:150}}><FullPageLoader /></View>:<View style={styles.detailsBox}>
         <Text style={styles.titleOne}>{userDetails?.first_name} {userDetails?.last_name}</Text>
         <Text style={styles.titleTwo}>{route?.params?.category}</Text>
         <Text style={[styles.titleThree,{marginBottom:40}]}>{formatSQLDateTime(route?.params?.created_at)}</Text>
@@ -71,7 +74,7 @@ const [userDetails,setUserDetails] = useState(null)
           />
         </View>
         
-     </View>
+     </View>}
     </View>
   </DrawerContainer>)
 }

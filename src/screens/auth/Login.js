@@ -19,10 +19,6 @@ import OTPInputView from '@twotalltotems/react-native-otp-input'
 import loginApiCall from '../../data/api/LoginApi';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import senOtpApiCall from '../../data/api/SendOtp';
-import { zegoVars } from '../../constants/zegoconbtrols';
-import ZegoUIKitPrebuiltCallService from '@zegocloud/zego-uikit-prebuilt-call-rn'
-import * as ZIM from 'zego-zim-react-native';
-import * as ZPNs from 'zego-zpns-react-native';
 import { firebasesetup } from '../../utility/firebasesetup';
 const firebaseConfig = {
   apiKey: "AIzaSyCa16BlVHZhJZonJarcCicBa3l_S2yyAN0",
@@ -38,7 +34,6 @@ const Login = () => {
   const [otpState, setOtpState] = useState(false);
   const [otp, setOtp] = useState("");
   const [otpResponse, setOtpResponse] = useState("");
-  const registrationPayload = useSelector(state => state.auth.registrationPayload);
   const [loading, setLoading] = useState(false);
   const [phone, setPhone] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -109,10 +104,10 @@ const Login = () => {
           }
           await dispatch({ type: 'SET_FULL_LOADING', payload: true });
           const userDetails =  await loginApiCall({phoneNumber:phone,push_token:pushTokenValue});
-          console.log(userDetails);1
+          console.log(userDetails);
           setOtp('')
           if(userDetails.hasOwnProperty("token")){
-            dispatch({ type: 'SET_LOGGED', payload: true });
+            
             await AsyncStorage.setItem("loggedIn","true");
             await AsyncStorage.setItem("token",userDetails?.token);
             if(userDetails.user.first_name){
@@ -125,13 +120,12 @@ const Login = () => {
             if(userDetails.user.id){
               await  AsyncStorage.setItem("id",userDetails.user.id.toString());
               dispatch({ type: 'SET_ID', payload: userDetails.user.id.toString() });
-              console.log("user id",userDetails.user.id);
-              console.log("user name",userDetails.user.first_name);
             }
             if(userDetails.user.phone_number){
               await  AsyncStorage.setItem("phoneNumber",phone);
               dispatch({ type: 'SET_PHONE_NUMBER', payload: userDetails.user.phone_number });
             }  
+            dispatch({ type: 'SET_LOGGED', payload: true });
             if(userDetails.user.balance){
               await  AsyncStorage.setItem("balance",userDetails?.user?.balance?.toString());
               dispatch({ type: 'SET_balance', payload: userDetails.user.balance });
