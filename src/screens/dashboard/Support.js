@@ -1,11 +1,7 @@
 import { StyleSheet, Text, View, Image,Pressable,Linking } from 'react-native'
-import React,{useState} from 'react'
-import Container from '../../components/Container'
+import React from 'react'
 import DrawerContainer from '../../components/DrawerContainer'
-import EvilIcons from "react-native-vector-icons/EvilIcons"
-import AntDesign from "react-native-vector-icons/AntDesign"
-import { colors } from '../../constants/colors'
-import { BasicModalPopup } from '../../components/ModalsPopup'
+
 
 const Support = () => {
   return (<DrawerContainer>
@@ -15,7 +11,7 @@ const Support = () => {
       </View>
       <View style={styles.supportAgent}>
         <Image source={require('../../assets/supportagent.png')} style={styles.agentIcon} />
-        <Text style={styles.ibrText}>Call *16299#</Text>
+        {/* <Text style={styles.ibrText}>Call *16299#</Text> */}
         <Text style={styles.hintText}>Emergency Law Consultation</Text>
         <Pressable onPress={()=>{Linking.openURL('mailto:support@ukilvai.com')}} style={styles.button}>
           <Text style={{color:'#000'}}>support@ukilvai.com</Text>

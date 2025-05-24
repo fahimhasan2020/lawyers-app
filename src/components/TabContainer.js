@@ -13,6 +13,7 @@ import { useDispatch,useSelector } from 'react-redux'
 import ApiService from '../utility/apiServices'
 const TabContainer = ({children }) => {
   const dispatch = useDispatch();
+  const {currentLocation} = useSelector(state=>state.auth);
   const userOnline = useSelector(state=>state?.auth.online);
   const userId = useSelector(state=>state?.auth.id);
   const navigation = useNavigation();
@@ -41,7 +42,7 @@ const TabContainer = ({children }) => {
     <View style={{width:Sizes.fullWidth,zIndex:2,flexDirection:'row',height:70,position:'absolute',top:100,left:0,justifyContent:'space-between',paddingTop:30,paddingLeft:20,paddingRight:20}}>
         <Pressable onPress={()=>navigation.navigate('Location')} style={{flexDirection:'row',marginLeft:10}}>
            <Entypo name="location" size={20} color={'#fff'} style={{marginTop:15}} />
-            <Text text70BL marginL-s3 marginT-s4 color="white">Dhaka, banglade...</Text>
+            <Text text70BL marginL-s3 marginT-s4 color="white">{currentLocation.length>20?currentLocation?.slice(0,20)+"...":currentLocation}</Text>
         </Pressable>
        
         <Switch value={userOnline} onColor={'green'} marginT-s4 marginR-s3 onValueChange={() => {updateOnline()}}/>

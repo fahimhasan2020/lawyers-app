@@ -118,7 +118,7 @@ const CustomDrawerContent = (props) => {
         </View>
       </View>
       <View style={{position:'absolute',bottom:0,left:0,width:'100%'}}>
-        <View style={{width:180,height:30,margin:10,padding:3,backgroundColor:'#F0F0F0',alignSelf:'center',borderRadius:20,flexDirection:'row'}}>
+        {/* <View style={{width:180,height:30,margin:10,padding:3,backgroundColor:'#F0F0F0',alignSelf:'center',borderRadius:20,flexDirection:'row'}}>
           <Pressable style={{padding:3,backgroundColor:currentTheme !== 'light'?'#fff':null,width:90,borderRadius:15,paddingLeft:10,marginLeft:3,flexDirection:'row',alignItems:'center',elevation:currentTheme !== 'light'?3:0}}>
             <MaterialIcons name="wb-sunny" size={15} color={'#535763'} style={{opacity:0.5,marginRight:10}} />
             <Text style={{color:'#535763',fontSize:13,fontWeight:'bold',opacity:0.5,marginTop:-3}}>লাইট</Text>
@@ -127,7 +127,7 @@ const CustomDrawerContent = (props) => {
             <Feather name="moon" size={15} color={'#535763'} style={{opacity:0.5,marginRight:10}} />
             <Text style={{color:'#535763',fontSize:13,fontWeight:'bold',opacity:0.5,marginTop:-3}}>ডার্ক</Text>
           </Pressable>
-        </View>
+        </View> */}
       </View>
     </DrawerContentScrollView>
   );
