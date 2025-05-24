@@ -1,82 +1,119 @@
-import { StyleSheet, Text, View, Image,Pressable } from 'react-native'
-import React,{useState} from 'react'
-import Container from '../../components/Container'
-import DrawerContainer from '../../components/DrawerContainer'
-import EvilIcons from "react-native-vector-icons/EvilIcons"
-import AntDesign from "react-native-vector-icons/AntDesign"
-import { colors } from '../../constants/colors'
-import { BasicModalPopup } from '../../components/ModalsPopup'
+import {FlatList, Pressable, StyleSheet, Text, View} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import TabContainer from '../../components/TabContainer';
+import Sizes from '../../themes/Sizes';
+import getOrderHistoryApi from '../../data/api/GetOrderHistory';
+import FullPageLoader from '../../components/FullPageLoader';
+import { useNavigation } from '@react-navigation/native';
+import DrawerContainer from '../../components/DrawerContainer';
 
 const Meetings = () => {
-  return (<DrawerContainer>
-    <View style={styles.container}>
-      <View style={styles.nameConteiner}>
-        <Text style={styles.name}>Meeting History</Text>
-      </View>
-     
+  const navigation = useNavigation();
+  const [historyList,setHistoryList] = useState([]);
+  const [apiCalling,setApiCalling] = useState(false);
+  const formatSQLDateTime =(sqlDateTime)=> {
+    const date = new Date(sqlDateTime);
+    const options = {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true,
+      weekday: 'long',
+      day: '2-digit',
+      month: 'long',
+      year: 'numeric',
+    };
+    const timeStr = date.toLocaleTimeString('en-US', {
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true,
+    });
+    const day = date.toLocaleDateString('en-US', { day: '2-digit' });
+    const month = date.toLocaleDateString('en-US', { month: 'long' });
+    const year = date.getFullYear();
+    return `${timeStr} ${day} ${month} ${year}`;
+  }
+  useEffect(()=>{
+    fetchOrderHistory()
+  },[])
+  const fetchOrderHistory = async()=>{
+    setApiCalling(true)
+    const history = await getOrderHistoryApi();
+    if(history){
+        setHistoryList(history);
+    }
+    setApiCalling(false)
+  }
+  return <DrawerContainer>
+     <View style={styles.nameConteiner}>
+              <Text style={styles.name}>Meetings</Text>
     </View>
-  </DrawerContainer>)
-}
+    <View style={styles.historyContainer}>
+        {apiCalling?<FullPageLoader />:<FlatList
+        ListEmptyComponent={()=>(<View style={{flex:1,alignItems:'center',justifyContent:'center'}}><Text style={{color:'#000'}}>No item available</Text></View>)}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{paddingBottom:250}}
+        data={historyList}
+        renderItem={({item,index})=>(<Pressable
+        style={styles.cardHistory}>
+            <Text style={styles.titleOne}>{item?.category}</Text>
+            <Text style={styles.titleTwo}>{item?.user?.first_name}</Text>
+            <Text style={styles.titleThree}>{formatSQLDateTime(item?.created_at)}</Text>
+            <Text style={styles.titleFour}>{item?.amount} BDT</Text>
+        </Pressable>)}
+        />}
+    </View>
+  </DrawerContainer>;
+};
 
-export default Meetings
+export default Meetings;
 
 const styles = StyleSheet.create({
-    container:{
-        flex:1,
-        marginTop:-200
+  nameConteiner: {
+    alignSelf: 'center',
+    padding: 10,
+    marginTop:-200
+  },
+  name: {
+    fontSize: 14,
+    color: 'orange',
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+  },
+    historyContainer:{
+        height:Sizes.fullHeight,
+        width:Sizes.fullWidth,
+        padding:10,
+        marginTop:100
     },
-    navigationText:{
-      fontWeight:'bold',
-      fontSize:12,
-      opacity:0.5,
-      color:'#000'
+    cardHistory:{
+        marginHorizontal:10,
+        marginBottom:10,
+        width:'90%',
+        height:120,
+        backgroundColor:'#fff',
+        elevation:3,
+        padding:10,
+        borderRadius:5
     },
-    menus:{
-      flexDirection:'row',
-      justifyContent:'space-between',
-      marginBottom:15
+    titleOne:{
+        fontSize:20,
+        color:'orange',
+        fontWeight:'800'
     },
-    navigationsContainer:{
-      alignSelf:'center',
-      width:'70%',
-      padding:10,
-      borderRadius:10,
-      margin:10,
-      marginTop:50,
-      backgroundColor:'#ffffff',
-      elevation:20
+    titleTwo:{
+        fontSize:16,
+        color:'#000',
+        fontWeight:'500'
     },
-    nameConteiner:{
-      alignSelf:'center',
-      padding:10
+    titleThree:{
+        fontSize:14,
+        color:'#2d2d2d',
+        fontWeight:'500'
     },
-    name:{
-      fontSize:14,
-      color:'orange',
-      fontWeight:'bold',
-      textTransform:'uppercase',
-      
-    },
-    phone:{
-      fontSize:10,
-      color:'grey',
-      fontWeight:'bold',
-      textTransform:'uppercase',
-      letterSpacing:0.3,
-      opacity:0.6,
-      alignSelf:'center'
-    },
-    avatar:{
-      height:80,width:80,
-    },
-
-    avatarContainer:{
-      padding:10,
-      backgroundColor:'#fff',
-      width:100,
-      height:100,
-      borderRadius:50,
-      alignSelf:'center',
-      elevation:10
+    titleFour:{
+        fontSize:14,
+        color:'#2d2d2d',
+        marginTop:10,
+        fontWeight:'500'
     }
-})
+});
